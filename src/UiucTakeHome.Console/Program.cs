@@ -33,7 +33,17 @@ if (!files.Any())
 foreach (var file in files)
 {
 	Console.WriteLine($"{Path.GetFileName(file)}");
-	var entries = parser.ParseFile(file).ToList();
+	List<UiucTakeHome.Lib.Models.SubawardEntry> entries;
+	try
+	{
+		entries = parser.ParseFile(file).ToList();
+	}
+	catch (Exception ex)
+	{
+		Console.WriteLine($"  Error reading file: {ex.Message}");
+		Console.WriteLine();
+		continue;
+	}
 
 	if (!entries.Any())
 	{
