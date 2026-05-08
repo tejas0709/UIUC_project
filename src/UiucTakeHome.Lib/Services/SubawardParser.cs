@@ -13,7 +13,7 @@ public class SubawardParser
         {
             foreach (var row in ws.RowsUsed())
             {
-                var cells = row.CellsUsed().ToList();
+                var cells = row.CellsUsed().OrderBy(c => c.Address.ColumnNumber).ToList();
                 if (!cells.Any())
                     continue;
 
@@ -26,11 +26,17 @@ public class SubawardParser
                 remainder = remainder[(remainder.IndexOf("Subaward:", StringComparison.OrdinalIgnoreCase) + "Subaward:".Length)..].Trim();
 
                 var name = remainder;
+                var rightOfLabel = cells.Skip(labelIndex + 1)
+                    .Select(c => new { Cell = c, Text = c.GetString().Trim() })
+                    .ToList();
+
                 if (string.IsNullOrWhiteSpace(name))
                 {
-                    name = cells.Skip(labelIndex + 1)
-                        .Select(c => c.GetString().Trim())
-                        .FirstOrDefault(text => !string.IsNullOrWhiteSpace(text) && !text.Equals("Subaward:", StringComparison.OrdinalIgnoreCase)) ?? string.Empty;
+                    name = rightOfLabel
+                        .Select(x => x.Text)
+                        .FirstOrDefault(text => !string.IsNullOrWhiteSpace(text)
+                            && !text.Equals("Subaward:", StringComparison.OrdinalIgnoreCase)
+                            && !IsNumeric(text)) ?? string.Empty;
                 }
 
                 name = NormalizeWhitespace(name);
@@ -38,7 +44,7 @@ public class SubawardParser
                 if (string.IsNullOrWhiteSpace(name))
                     continue;
 
-                var amount = ExtractAmount(cells);
+                var amount = ExtractAmount(rightOfLabel.Select(x => x.Cell).ToList());
                 yield return new SubawardEntry(name, amount, Path.GetFileName(path));
             }
         }
@@ -63,5 +69,11 @@ public class SubawardParser
     {
         var parts = value.Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
         return string.Join(' ', parts);
+    }
+
+    private static bool IsNumeric(string value)
+    {
+        return decimal.TryParse(value, NumberStyles.Currency | NumberStyles.Number, CultureInfo.InvariantCulture, out _)
+            || decimal.TryParse(value, NumberStyles.Currency | NumberStyles.Number, CultureInfo.CurrentCulture, out _);
     }
 }

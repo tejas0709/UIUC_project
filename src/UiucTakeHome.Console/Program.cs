@@ -10,6 +10,7 @@ if (showHelp)
 
 var folder = ResolveFolder(args);
 var verbose = args.Any(arg => string.Equals(arg, "--verbose", StringComparison.OrdinalIgnoreCase) || string.Equals(arg, "-v", StringComparison.OrdinalIgnoreCase));
+var outputCulture = CultureInfo.GetCultureInfo("en-US");
 
 if (!Directory.Exists(folder))
 {
@@ -44,7 +45,7 @@ foreach (var file in files)
 	{
 		Console.WriteLine($"  Subaward: {e.Subrecipient}");
 		if (verbose)
-			Console.WriteLine($"    Amount: {e.Amount.ToString("C", CultureInfo.CurrentCulture)}");
+			Console.WriteLine($"    Amount: {e.Amount.ToString("C", outputCulture)}");
 	}
 
 	allEntries.AddRange(entries);
@@ -65,7 +66,7 @@ var totals = allEntries
 	.ToList();
 
 foreach (var item in totals)
-	Console.WriteLine($"  {item.Name,-24} {item.Total.ToString("C", CultureInfo.CurrentCulture)}");
+	Console.WriteLine($"  {item.Name,-24} {item.Total.ToString("C", outputCulture)}");
 
 return 0;
 
