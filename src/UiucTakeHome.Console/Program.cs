@@ -1,6 +1,13 @@
 using System.Globalization;
 using UiucTakeHome.Lib.Services;
 
+var showHelp = args.Any(arg => string.Equals(arg, "--help", StringComparison.OrdinalIgnoreCase) || string.Equals(arg, "-h", StringComparison.OrdinalIgnoreCase));
+if (showHelp)
+{
+	PrintHelp();
+	return 0;
+}
+
 var folder = ResolveFolder(args);
 var verbose = args.Any(arg => string.Equals(arg, "--verbose", StringComparison.OrdinalIgnoreCase) || string.Equals(arg, "-v", StringComparison.OrdinalIgnoreCase));
 
@@ -59,4 +66,15 @@ static string ResolveFolder(string[] args)
 {
 	var folderIndex = Array.FindIndex(args, arg => string.Equals(arg, "--folder", StringComparison.OrdinalIgnoreCase) || string.Equals(arg, "-f", StringComparison.OrdinalIgnoreCase));
 	return folderIndex >= 0 && folderIndex + 1 < args.Length ? args[folderIndex + 1] : "samples";
+}
+
+static void PrintHelp()
+{
+	Console.WriteLine("Usage:");
+	Console.WriteLine("  dotnet run --project src/UiucTakeHome.Console -- --folder ./samples [--verbose]");
+	Console.WriteLine();
+	Console.WriteLine("Options:");
+	Console.WriteLine("  -f, --folder   Folder containing .xlsx files (default: samples)");
+	Console.WriteLine("  -v, --verbose  Show amounts for each file listing");
+	Console.WriteLine("  -h, --help     Show this help message");
 }
