@@ -27,6 +27,10 @@ Distinct subrecipients and total subaward amounts:
 dotnet test
 ```
 
+## Requirements
+
+- .NET 10 SDK
+
 ## Notes
 
 - This project uses ClosedXML for Excel parsing.
