@@ -6,3 +6,4 @@
 Questions:
 - Should negative amounts ever appear? Currently parsed as-is.
 - Are there variants of the label text beyond "Subaward:" that should be supported?
+- Should there be a minimum threshold for inclusion (e.g., ignore zero amounts)?
