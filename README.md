@@ -10,6 +10,17 @@ dotnet run --project src/UiucTakeHome.Console -- --folder ./samples
 
 Add `--verbose` to show amounts under each file listing.
 
+Example:
+
+```text
+SubawardBudgetExample1.xlsx
+	Subaward: Indiana
+	Subaward: Mayo
+
+Distinct subrecipients and total subaward amounts:
+	Indiana                 $25,000.00
+```
+
 ## Testing
 
 ```bash
