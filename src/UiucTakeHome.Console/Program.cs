@@ -26,7 +26,7 @@ foreach (var file in FileEnumerator.GetExcelFiles(folder))
 		continue;
 	}
 
-	foreach (var e in entries)
+	foreach (var e in entries.OrderBy(e => e.Subrecipient, StringComparer.OrdinalIgnoreCase))
 	{
 		Console.WriteLine($"  Subaward: {e.Subrecipient}");
 		if (verbose)
@@ -51,7 +51,7 @@ var totals = allEntries
 	.ToList();
 
 foreach (var item in totals)
-	Console.WriteLine($"  {item.Name,-20} {item.Total.ToString("C", CultureInfo.CurrentCulture)}");
+	Console.WriteLine($"  {item.Name,-24} {item.Total.ToString("C", CultureInfo.CurrentCulture)}");
 
 return 0;
 
