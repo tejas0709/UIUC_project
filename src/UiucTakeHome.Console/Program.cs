@@ -21,8 +21,15 @@ Console.WriteLine($"Reading spreadsheets from: {Path.GetFullPath(folder)}\n");
 
 var parser = new SubawardParser();
 var allEntries = new List<UiucTakeHome.Lib.Models.SubawardEntry>();
+var files = FileEnumerator.GetExcelFiles(folder).ToList();
 
-foreach (var file in FileEnumerator.GetExcelFiles(folder))
+if (!files.Any())
+{
+	Console.WriteLine("No .xlsx files found in the folder.");
+	return 0;
+}
+
+foreach (var file in files)
 {
 	Console.WriteLine($"{Path.GetFileName(file)}");
 	var entries = parser.ParseFile(file).ToList();
