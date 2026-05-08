@@ -33,6 +33,8 @@ public class SubawardParser
                         .FirstOrDefault(text => !string.IsNullOrWhiteSpace(text) && !text.Equals("Subaward:", StringComparison.OrdinalIgnoreCase)) ?? string.Empty;
                 }
 
+                name = NormalizeWhitespace(name);
+
                 if (string.IsNullOrWhiteSpace(name))
                     continue;
 
@@ -55,5 +57,11 @@ public class SubawardParser
         }
 
         return 0m;
+    }
+
+    private static string NormalizeWhitespace(string value)
+    {
+        var parts = value.Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        return string.Join(' ', parts);
     }
 }
