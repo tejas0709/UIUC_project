@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/UiucTakeHome.Console/UiucTakeHome.Console.csproj" />
+    <Project Path="src/UiucTakeHome.Lib/UiucTakeHome.Lib.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/UiucTakeHome.Tests/UiucTakeHome.Tests.csproj" />
+  </Folder>
+</Solution>
