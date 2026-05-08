@@ -16,6 +16,11 @@ Add `--verbose` to show amounts under each file listing.
 dotnet test
 ```
 
+## Notes
+
+- This project uses ClosedXML for Excel parsing.
+- If your environment surfaces NuGet security warnings, update dependencies as needed.
+
 ## Assumptions & Questions
 
 See `ASSUMPTIONS.md`.
