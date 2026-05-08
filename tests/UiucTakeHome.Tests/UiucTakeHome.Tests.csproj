@@ -11,4 +11,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\UiucTakeHome.Lib\UiucTakeHome.Lib.csproj" />
+  </ItemGroup>
 </Project>
